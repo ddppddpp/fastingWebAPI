@@ -1,2 +1,2 @@
 bgchof @ git+https://github.com/ddppddpp/bgchof.git
-fastapi==0.70.1
+fastapi>=0.70.1, <0.71.0
