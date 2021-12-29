@@ -1,2 +1,2 @@
-bgchof @ git+https://github.com/ddppddpp/bgchof.git@2db824b21f7a2aec5ed00bfaade3db3d9fc46853
+bgchof @ git+https://github.com/ddppddpp/bgchof.git
 fastapi==0.70.1

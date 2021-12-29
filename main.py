@@ -6,7 +6,7 @@ import pydantic
 import calendar
 from context import bgchof
 from bgchof import getStatusForDate
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, status
 from pydantic import BaseModel, conint
 
 
@@ -27,7 +27,9 @@ def firstDayOfWeekforDate(inputDate: date):
 app = FastAPI()
 
 
-@app.get("/fastingStatus/date", response_model=dateStatus)
+@app.get(
+    "/fastingStatus/date", response_model=dateStatus, status_code=status.HTTP_200_OK
+)
 async def read_items(
     inputDate: Optional[date] = Query(
         None,
@@ -44,7 +46,11 @@ async def read_items(
 
 
 # week of dates
-@app.get("/fastingStatus/week", response_model=List[dateStatus])
+@app.get(
+    "/fastingStatus/week",
+    response_model=List[dateStatus],
+    status_code=status.HTTP_200_OK,
+)
 async def read_items(
     inputDate: Optional[date] = Query(
         None,
@@ -67,7 +73,11 @@ async def read_items(
 
 
 # month of dates
-@app.get("/fastingStatus/month", response_model=List[dateStatus])
+@app.get(
+    "/fastingStatus/month",
+    response_model=List[dateStatus],
+    status_code=status.HTTP_200_OK,
+)
 async def read_items(
     inputDate: Optional[date] = Query(
         None,
