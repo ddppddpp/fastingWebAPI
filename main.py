@@ -1,13 +1,14 @@
 # api that accepts a date as a query param and returns an int (0..6) as resposne
 from typing import Optional, List
 from datetime import date, datetime, timedelta
-
-import pydantic
-import calendar
-from context import bgchof
-from bgchof import getStatusForDate
-from fastapi import FastAPI, Query, status
+from fastapi import FastAPI, Query, status, Request
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, conint
+import calendar
+
+import bgchof
+from bgchof import getStatusForDate
 
 
 class dateStatus(BaseModel):
@@ -24,7 +25,15 @@ def firstDayOfWeekforDate(inputDate: date):
     return resultFirstDayOfWeek
 
 
+templates = Jinja2Templates(directory="templates")
+
+
 app = FastAPI()
+
+# index.html
+@app.get("/", response_class=HTMLResponse)
+async def landing_page(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.get(
