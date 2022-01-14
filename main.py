@@ -1,11 +1,18 @@
 # api that accepts a date as a query param and returns an int (0..6) as resposne
 from typing import Optional, List
 from datetime import date, datetime, timedelta
+import calendar
+import sys, os
+
+from mangum import Mangum
+import uvicorn
 from fastapi import FastAPI, Query, status, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, conint
-import calendar
+
+# TODO: Add this line
+from starlette.middleware.cors import CORSMiddleware
 
 import bgchof
 from bgchof import getStatusForDate
@@ -27,8 +34,22 @@ def firstDayOfWeekforDate(inputDate: date):
 
 templates = Jinja2Templates(directory="templates")
 
+# use this to expose the docs in AWS
+stage = os.environ.get("STAGE", None)
+openapi_prefix = f"/{stage}" if stage else "/"
 
-app = FastAPI()
+# hardcode to 'dev
+app = FastAPI(title="Orthodox Fasting Dietary Status", openapi_prefix="/dev")
+
+# TODO: Add these lines
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins="*",
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["x-apigateway-header", "Content-Type", "X-Amz-Date"],
+)
+
 
 # index.html
 @app.get("/", response_class=HTMLResponse)
@@ -63,7 +84,7 @@ async def read_items(
 async def read_items(
     inputDate: Optional[date] = Query(
         None,
-        description="Date in YYYY-MM-DD format for which to calculate the Fasting Status. If Empty defaults to today.",
+        description="Date in YYYY-MM-DD format within the week for which to calculate the Fasting Status. If Empty defaults to today.",
     )
 ):
     if inputDate:
@@ -104,3 +125,14 @@ async def read_items(
             {"the_date": tempDate, "status": bgchof.getStatusForDate(tempDate)}
         )
     return result
+
+
+# to make it work with Amazon Lambda, we create a handler object
+handler = Mangum(app=app)
+# def handler(event, context):
+# return "Hello from AWS Lambda using Python" + sys.version + "!"
+
+
+# to make it run locally
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
