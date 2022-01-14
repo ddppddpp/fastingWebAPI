@@ -29,3 +29,7 @@ start a browser and go to [localhost:8000](http://localhost:8000)
 ### Docker container
 
 Build an image using the supplied Dockerfile and start a container, exposing a port of your desire.  
+
+### AWS Lambda
+
+To setup a container-based serverless function on AWS use the supplied dockerfile Dockerfile.aws.lambda. Please note it uses an environment variable to override the cache file location, as apparently '/tmp' is the only directory with write access in AWS Lambda.
