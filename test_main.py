@@ -18,13 +18,13 @@ def test_first_day_of_week_for_date():
 
 
 def test_get_fastingstatus_date():
-    response = client.get("/fastingStatus/date", headers={"inputDate": "2022-01-20"})
+    response = client.get("/fastingStatus/date", params={"inputDate": "2022-01-20"})
     assert response.status_code == 200
     assert response.json() == {"the_date": "2022-01-20", "status": 6}
 
 
 def test_get_fastingstatus_week():
-    response = client.get("/fastingStatus/week", headers={"inputDate": "2022-01-20"})
+    response = client.get("/fastingStatus/week", params={"inputDate": "2022-01-20"})
     assert response.status_code == 200
     assert response.json() == [
         {"the_date": "2022-01-17", "status": 6},
@@ -38,7 +38,7 @@ def test_get_fastingstatus_week():
 
 
 def test_get_fastingstatus_month():
-    response = client.get("/fastingStatus/month", headers={"inputDate": "2022-01-20"})
+    response = client.get("/fastingStatus/month", params={"inputDate": "2022-01-20"})
     assert response.status_code == 200
     assert response.json() == [
         {"the_date": "2022-01-01", "status": 6},
