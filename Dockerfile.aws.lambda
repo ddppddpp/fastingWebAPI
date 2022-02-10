@@ -13,7 +13,7 @@ ENV PYTHONUNBUFFERED=1
 ENV BGCHOF_CFG_CFG_DATAFILE_PREFIX=/tmp/.bgchofcache/
 
 #git
-RUN yum upgrade && yum install git -y
+RUN yum update --assumeyes --skip-broken && yum install git -y
 # Install pip requirements
 COPY requirements.txt .
 

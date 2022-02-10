@@ -36,10 +36,37 @@ templates = Jinja2Templates(directory="templates")
 
 # use this to expose the docs in AWS
 stage = os.environ.get("STAGE", None)
-openapi_prefix = f"/{stage}" if stage else "/"
+openapi_prefix_uri = f"/{stage}/openapi.json" if stage else "/openapi.json"
 
-# hardcode to 'dev
-app = FastAPI(title="Orthodox Fasting Dietary Status", openapi_prefix="/dev")
+# add description
+my_descripiton = """
+Orthodox Fasting Dietary Status API that returns a status code for dates.
+
+## fastingStatus/date
+Returns a date status, consisting of the inputDate and integer (0..6) showing the status for inputDate. Date format should be YYYY-MM-DD.
+
+## fastingStatus/week
+Returns a list of date statuses, consisting of the inputDate and integer (0..6) showing the status for the week in which inputDate falls. Date format should be YYYY-MM-DD.
+
+## fastingStatus/month
+Returns a list of date statuses, consisting of the inputDate and integer (0..6) showing the status for the month in which inputDate falls. Date format should be YYYY-MM-DD.
+
+"""
+
+
+# hardcode docs to 'dev. try chainging openapi_url to openapi_prefix
+app = FastAPI(
+    title="Orthodox Fasting Dietary Status",
+    description=my_descripiton,
+    version="0.2",
+    contact={"name": "Ivailo Djilianov", "email": "djidji.perroto@gmail.com"},
+    license_info={
+        "name": "GNU GPLv3",
+        "url": "https://www.gnu.org/licenses/gpl-3.0.html",
+    },
+    #    openapi_url="/dev/openapi.json",
+    openapi_url=openapi_prefix_uri,
+)
 
 # TODO: Add these lines
 app.add_middleware(

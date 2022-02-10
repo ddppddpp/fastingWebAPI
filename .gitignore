@@ -133,3 +133,9 @@ dmypy.json
 
 #docker
 .dockerignore
+
+#MacOS
+.DS_Store
+
+#gitignore
+.gitignore
