@@ -1,8 +1,10 @@
 # api that accepts a date as a query param and returns an int (0..6) as resposne
+from pickletools import int4
 from typing import Optional, List
 from datetime import date, datetime, timedelta
 import calendar
 import sys, os
+from unittest import result
 
 from mangum import Mangum
 import uvicorn
@@ -16,11 +18,17 @@ from starlette.middleware.cors import CORSMiddleware
 
 import bgchof
 from bgchof import getStatusForDate
+from calculateEasterSunday import calcEaster
 
 
 class dateStatus(BaseModel):
     the_date: date
     status: conint(ge=0, le=6)
+
+
+class dateResponse(BaseModel):
+    the_year: int
+    EasterSunday: date
 
 
 def firstDayOfWeekforDate(inputDate: date):
@@ -151,6 +159,26 @@ async def read_items(
         result.append(
             {"the_date": tempDate, "status": bgchof.getStatusForDate(tempDate)}
         )
+    return result
+
+
+@app.get(
+    "/calculateEasterSunday/",
+    response_model=dateResponse,
+    status_code=status.HTTP_200_OK,
+)
+async def read_items(
+    inputYear: Optional[int] = Query(
+        None,
+        description="Year number in YYYY format for which to calculate the Easter Sunday. If Empty defaults to today.",
+    )
+):
+    if inputYear:
+        theYear = inputYear
+    else:
+        theYear = date.today().year
+
+    result = {"the_year": theYear, "EasterSunday": calcEaster(int(theYear))}
     return result
 
 

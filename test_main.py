@@ -73,3 +73,9 @@ def test_get_fastingstatus_month():
         {"the_date": "2022-01-30", "status": 6},
         {"the_date": "2022-01-31", "status": 6},
     ]
+
+
+def test_calculate_Easter_Sunday_2022_assert_2022_04_24():
+    response = client.get("/calculateEasterSunday/", params={"inputYear": "2022"})
+    assert response.status_code == 200
+    assert response.json() == {"the_year": 2022, "EasterSunday": "2022-04-24"}
