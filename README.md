@@ -38,10 +38,17 @@ To push a new version of the image use the following instructions (user/region d
 ` 
 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 310391119521.dkr.ecr.eu-central-1.amazonaws.com
 `
+
+
 `docker build -f Dockerfile.aws.lambda -t orthodox-fasting/fastapi-lambda .`
+
+
 ` 
 docker tag orthodox-fasting/fastapi-lambda:latest 310391119521.dkr.ecr.eu-central-1.amazonaws.com/orthodox-fasting/fastapi-lambda:latest
 ` 
+
+
 `docker push 310391119521.dkr.ecr.eu-central-1.amazonaws.com/orthodox-fasting/fastapi-lambda:latest`
+
 
 Copy the image URI from the [GUI](https://eu-central-1.console.aws.amazon.com/ecr/repositories/private/310391119521/orthodox-fasting/fastapi-lambda?region=eu-central-1) and [Deploy New Image](https://eu-central-1.console.aws.amazon.com/lambda/home?region=eu-central-1#/functions/orthodox-fasting?tab=code)
