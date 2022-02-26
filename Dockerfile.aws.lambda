@@ -24,6 +24,6 @@ WORKDIR ${LAMBDA_TASK_ROOT}
 COPY ./main.py __init__.py ${LAMBDA_TASK_ROOT}/
 COPY ./templates ${LAMBDA_TASK_ROOT}/templates
 
-#ENTRYPOINT [ "uvicorn" ]
+ENTRYPOINT [ "/lambda-entrypoint.sh" ]
 
 CMD ["main.handler"]
