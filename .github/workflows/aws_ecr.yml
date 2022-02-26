@@ -1,8 +1,10 @@
 on:
   push:
-    branches: [master]
+    branches:
+      - main
   pull_request:
-    branches: [master]
+    branches:
+      - main
 
 name: Node Project 'orthodox-fasting/fastapi-lambda' CI on ECR
 
