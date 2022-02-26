@@ -32,7 +32,7 @@ Build an image using the supplied Dockerfile and start a container, exposing a p
 
 ### AWS Lambda
 
-To setup a container-based serverless function on AWS use the supplied dockerfile Dockerfile.aws.lambda. Please note it uses an environment variable to override the cache file location, as apparently '/tmp' is the only directory with write access in AWS Lambda.
+To setup a container-based serverless function on AWS use the supplied dockerfile Dockerfile.aws.lambda. Please note it uses an environment variable to override the cache file location, as apparently '/tmp' is the only directory with write access in AWS Lambda.[bump]
 To push a new version of the image use the following instructions (user/region dependable):
 
 ` 
