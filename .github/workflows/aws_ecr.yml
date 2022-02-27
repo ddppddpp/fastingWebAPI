@@ -11,7 +11,7 @@ name: Node Project 'orthodox-fasting/fastapi-lambda' CI on ECR
 jobs:
   deploy:
     name: Deploy
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
           IMAGE_TAG: latest
         run: |
           # Build a docker container and push it to ECR 
-          docker build -f Dockerfile.aws.lambda --platform=linux/arm64/v8 -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -f Dockerfile.aws.lambda -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           #echo "Tagging"
           #docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "Pushing image to ECR..."
