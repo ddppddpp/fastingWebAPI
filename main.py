@@ -73,7 +73,9 @@ app = FastAPI(
         "url": "https://www.gnu.org/licenses/gpl-3.0.html",
     },
     #    openapi_url="/dev/openapi.json",
-    openapi_url=openapi_prefix_uri,
+    # openapi_url=openapi_prefix_uri,
+    # now try with stage
+    openapi_prefix=stage,
 )
 
 # TODO: Add these lines
