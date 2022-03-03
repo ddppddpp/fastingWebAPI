@@ -45,6 +45,8 @@ templates = Jinja2Templates(directory="templates")
 # use this to expose the docs in AWS
 stage = os.environ.get("STAGE", None)
 openapi_prefix_uri = f"/{stage}/openapi.json" if stage else "/openapi.json"
+docs_url = f"/{stage}/docs" if stage else "/docs"
+redoc_url = f"/{stage}/redoc" if stage else "/redoc"
 
 # add description
 my_descripiton = """
@@ -74,8 +76,8 @@ app = FastAPI(
     },
     #    openapi_url="/dev/openapi.json",
     openapi_url=openapi_prefix_uri,
-    docs_url=f"/{stage}/docs" if stage else "/docs",
-    redoc_url=f"/{stage}/redoc" if stage else "/redoc",
+    docs_url=docs_url,
+    redoc_url=redoc_url,
     # now try with stage
     # openapi_prefix=stage,
 )
