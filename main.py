@@ -79,7 +79,7 @@ app = FastAPI(
     # openapi_url=openapi_prefix_uri,
     # docs_url=docs_url,
     # redoc_url=redoc_url,
-    # root_path=root_path,
+    root_path=root_path,
     # now try with stage
     openapi_prefix=root_path,
 )
