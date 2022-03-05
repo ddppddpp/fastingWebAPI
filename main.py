@@ -103,7 +103,12 @@ async def landing_page(request: Request):
 
 @app.get("/app")
 def read_main(request: Request):
-    return {"message": "Hello World", "root_path": request.scope.get("root_path")}
+    return {
+        "message": "Hello World",
+        "root_path": request.scope.get("root_path"),
+        "stage": stage,
+        "openapi_prefix": openapi_prefix_uri,
+    }
 
 
 @app.get(
