@@ -45,7 +45,7 @@ templates = Jinja2Templates(directory="templates")
 # use this to expose the docs in AWS
 region = os.environ.get("AWS_REGION", None)
 # I can't find a way to get the stage so I'm hardcoding to the /dev path
-stage = "/dev" if region else ""
+stage = "dev" if region else ""
 openapi_prefix_uri = f"/{stage}/openapi.json" if stage else "/openapi.json"
 docs_url = f"/{stage}/docs" if stage else "/docs"
 redoc_url = f"/{stage}/redoc" if stage else "/redoc"
