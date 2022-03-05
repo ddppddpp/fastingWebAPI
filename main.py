@@ -43,10 +43,9 @@ def firstDayOfWeekforDate(inputDate: date):
 templates = Jinja2Templates(directory="templates")
 
 # use this to expose the docs in AWS
-stage = os.environ.get("STAGE", None)
-openapi_prefix_uri = f"/{stage}/openapi.json" if stage else "/openapi.json"
-docs_url = f"/{stage}/docs" if stage else "/docs"
-redoc_url = f"/{stage}/redoc" if stage else "/redoc"
+region = os.environ.get("AWS_REGION", None)
+# I can't find a way to get the stage so I'm hardcoding to the /dev path
+stage = "dev" if region else ""
 root_path = f"/{stage}" if stage else "/"
 
 # add description
@@ -75,12 +74,7 @@ app = FastAPI(
         "name": "GNU GPLv3",
         "url": "https://www.gnu.org/licenses/gpl-3.0.html",
     },
-    #    openapi_url="/dev/openapi.json",
-    # openapi_url=openapi_prefix_uri,
-    # docs_url=docs_url,
-    # redoc_url=redoc_url,
     root_path=root_path,
-    # now try with stage
     openapi_prefix=root_path,
 )
 
@@ -99,17 +93,6 @@ app.add_middleware(
 @app.get("/", response_class=HTMLResponse)
 async def landing_page(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
-
-
-@app.get("/app")
-def read_main(request: Request):
-    return {
-        "message": "Hello World",
-        "root_path": request.scope.get("root_path"),
-        "stage": stage,
-        "openapi_prefix": openapi_prefix_uri,
-        "environ": os.environ,
-    }
 
 
 @app.get(
