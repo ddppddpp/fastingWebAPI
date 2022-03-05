@@ -108,6 +108,7 @@ def read_main(request: Request):
         "root_path": request.scope.get("root_path"),
         "stage": stage,
         "openapi_prefix": openapi_prefix_uri,
+        "environ": os.environ,
     }
 
 
