@@ -47,6 +47,7 @@ stage = os.environ.get("STAGE", None)
 openapi_prefix_uri = f"/{stage}/openapi.json" if stage else "/openapi.json"
 docs_url = f"/{stage}/docs" if stage else "/docs"
 redoc_url = f"/{stage}/redoc" if stage else "/redoc"
+root_path = f"/{stage}" if stage else "/"
 
 # add description
 my_descripiton = """
@@ -75,9 +76,10 @@ app = FastAPI(
         "url": "https://www.gnu.org/licenses/gpl-3.0.html",
     },
     #    openapi_url="/dev/openapi.json",
-    openapi_url=openapi_prefix_uri,
-    docs_url=docs_url,
-    redoc_url=redoc_url,
+    # openapi_url=openapi_prefix_uri,
+    # docs_url=docs_url,
+    # redoc_url=redoc_url,
+    root_path=root_path,
     # now try with stage
     # openapi_prefix=stage,
 )
